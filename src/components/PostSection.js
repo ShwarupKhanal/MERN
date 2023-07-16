@@ -50,10 +50,28 @@ const postData = [
   },
 ];
 class PostSection extends Component {
+  constructor() {
+    super();
+    this.state = {
+    posts: [],
+    };
+    }
+    componentDidMount() {
+    const that = this;
+    fetch("http://localhost:5000/api/v1/posts")
+    .then((resp) => resp.json())
+    .then((data) => {
+    that.setState({ posts: data });
+    })
+    .catch((err) => {
+    console.error(err);
+    });
+    }
+    
   render() {
     return (
       <div className="posts-section">
-        {postData.map((post, idx) => (
+        {this.state.posts.map((post, idx) => (
           <div key={idx} className="post-bar">
             <div className="post_topbar">
               <div className="usy-dt">
